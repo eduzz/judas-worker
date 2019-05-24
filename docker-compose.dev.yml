@@ -1,0 +1,32 @@
+
+version: '3'
+services:
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    volumes:
+      - ./src:/worker/src
+    ports:
+      - 4000:3000
+    environment:
+      - TOKEN=abcde
+      - ELASTIC_HOST=http://elastic:9200
+      - RABBIT_HOST=amqp://user:password@rabbitmq/
+    depends_on:
+      - elastic
+      - rabbitmq
+
+  elastic:
+    image: elasticsearch:6.8.0
+    ports:
+      - 9201:9200
+    environment:
+      - discovery.type=single-node
+
+  rabbitmq:
+    image: rabbitmq:3.7-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=user 
+      - RABBITMQ_DEFAULT_PASS=password
