@@ -14,6 +14,7 @@ services:
       - TOKEN=abcde
       - ELASTIC_HOST=http://elastic:9200
       - RABBIT_HOST=amqp://user:password@rabbitmq/
+      - PREFETCH=50
     depends_on:
       - elastic
       - rabbitmq

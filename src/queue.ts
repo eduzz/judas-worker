@@ -1,4 +1,4 @@
-import { rabbitHost } from "./config";
+import { rabbitHost, prefetch } from "./config";
 import * as amqp from 'amqplib'
 import * as Bluebird from 'bluebird';
 
@@ -32,7 +32,7 @@ export const listen = async (callback) => {
   const ch = await getChannel();
 
   await ch.assertExchange(exchange, 'topic', { durable: true });
-  await ch.prefetch(1);
+  await ch.prefetch(prefetch);
 
   await ch.assertQueue(nackQueue, { durable: true, arguments: {
     'x-dead-letter-exchange': exchange,
@@ -64,7 +64,7 @@ const makeChannel = async (): Promise<amqp.Channel> => {
   const conn = await getConnection();
   const ch = await conn.createChannel();
   await ch.assertExchange(exchange, 'topic', { durable: true });
-  await ch.prefetch(1);
+  await ch.prefetch(prefetch);
 
   return ch;
 }
