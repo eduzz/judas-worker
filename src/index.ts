@@ -5,7 +5,10 @@ import './worker';
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+    limit: '1mb'
+}));
+
 app.use(router);
 
 app.listen(3000, () => {
