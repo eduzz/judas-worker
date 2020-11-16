@@ -52,7 +52,7 @@ export const listen = async (callback) => {
       const payload = msg.content;
       const parsed = JSON.parse(payload.toString());
 
-      await callback(parsed);
+      await callback(parsed, msg);
       ch.ack(msg);
     } catch (err) {
       ch.nack(msg, false, false);
