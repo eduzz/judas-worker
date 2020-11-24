@@ -41,6 +41,15 @@ import * as amqp from 'amqplib'
                 return true;
             }
 
+            console.log('unknown error', JSON.stringify({ 
+                agent: msg.agent, 
+                app: msg.app, 
+                env: msg.environement, 
+                action: msg.action, 
+                module: msg.module, 
+                err: err.body || err
+            }));
+
             throw err;
         }
 
